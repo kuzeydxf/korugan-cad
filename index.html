@@ -1252,6 +1252,29 @@ body.previewing #sheet::after { opacity: 0.9; animation: pv-sweep 1.1s ease-in-o
   :root[data-theme="glass"] #sheet:not([hidden]), :root[data-theme="glass"] #rpanel:not([hidden]) { animation-name: g-slide-r; }
 }
 @keyframes g-slide-r { from { opacity: 0; translate: 0.75rem 0; scale: 0.97; } to { opacity: 1; translate: 0 0; scale: 1; } }
+
+/* ---------- iPad / iPhone (html.ios): behave like an app, not a web page ---------- */
+/* the page itself never moves: no rubber-band bounce, no scrolling of the whole
+   app, no pinch or double-tap zoom; only panels scroll, inside themselves */
+html.ios { padding: 0 !important; height: 100%; overflow: hidden; overscroll-behavior: none; touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%; }
+html.ios body { position: fixed; inset: 0; height: auto; overflow: hidden; overscroll-behavior: none; }
+html.ios #app { position: absolute; inset: 0; height: auto; }
+html.ios:not([data-theme="glass"]) #app { top: env(safe-area-inset-top, 0px); bottom: env(safe-area-inset-bottom, 0px); }
+html.ios #sheet, html.ios #tree, html.ios #rpanel, html.ios #pop, html.ios #home, html.ios .crow, html.ios .ctabs, html.ios .rusedrow, html.ios .rcats { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+/* no selection, loupes, callouts or drag ghosts from touching the interface */
+html.ios, html.ios * { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
+html.ios img, html.ios svg { -webkit-user-drag: none; }
+html.ios input, html.ios textarea, html.ios [contenteditable] { -webkit-user-select: text; user-select: text; }
+/* buttons answer at once (no wait for a possible double-tap zoom) */
+html.ios button, html.ios label, html.ios .chip, html.ios .ctab, html.ios .cb, html.ios .pi, html.ios .card, html.ios a { touch-action: manipulation; }
+/* Safari zooms the page into any text field under 16 px and stays zoomed */
+html.ios input:not([type="range"]):not([type="color"]):not([type="checkbox"]), html.ios textarea, html.ios select { font-size: 16px !important; }
+/* things dragged sideways (value scrubbing, dimension labels, the view
+   cube, the quick menu) must not hand the gesture to Safari's scrolling */
+html.ios .flab { touch-action: pan-y; }
+html.ios #labels, html.ios #labels *, html.ios #cube, html.ios #cube *, html.ios #radial, html.ios #radial *, html.ios .tucktab, html.ios #numpad { touch-action: none; }
+/* pressed state stands in for hover on a screen without one */
+html.ios button:active, html.ios .chip:active, html.ios .pi:active { filter: brightness(1.18); }
 </style>
 
 <div id="app">
@@ -1315,6 +1338,7 @@ body.previewing #sheet::after { opacity: 0.9; animation: pv-sweep 1.1s ease-in-o
 </div>
 <script>
 // theme before the app starts, so the first frame has the right colours
+(function () { try { if (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) document.documentElement.classList.add("ios"); } catch (e) {} })();
 (function () { var t = "glass"; try { var v = localStorage.getItem("kalem.theme"); if (!localStorage.getItem("kalem.glassMig")) { localStorage.setItem("kalem.glassMig", "1"); if (!v || v === '"korugan"' || v === '"sw"') { v = '"glass"'; localStorage.setItem("kalem.theme", v); } } if (v) t = JSON.parse(v); } catch (e) {} if (t !== "auto") document.documentElement.setAttribute("data-theme", t); })();
 </script>
 <script src="app.js"></script>
