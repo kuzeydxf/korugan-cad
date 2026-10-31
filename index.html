@@ -298,6 +298,10 @@ body.pad-open #sheet { visibility: hidden; }
 .ftree .br .sw { width: 0.8125rem; height: 0.8125rem; border-radius: 50%; background: var(--c); border: 1px solid var(--line-2); flex: none; margin: 0 0.25rem; }
 .ftree .rbar button { display: flex; align-items: center; gap: 0.5rem; width: 100%; height: 2.125rem; padding: 0 0.625rem; border-radius: 0.5625rem; color: var(--accent); font-size: 0.7812rem; font-weight: 700; background: var(--accent-soft); border-top: 0.125rem solid var(--accent); }
 .ftree .empty { padding: 0.5rem 0.75rem; color: var(--muted); font-size: 0.8438rem; }
+.btnrow { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.4rem 0; }
+.smarttag { position: fixed; left: 0; top: 0; z-index: 60; pointer-events: none; padding: 0.35rem 0.7rem; border-radius: 999px; background: var(--accent, #c7b49e); color: #15130f; font-size: 0.82rem; font-weight: 600; white-space: nowrap; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+.smarttag[hidden] { display: none; }
+.ftree .mnote { padding: 0.15rem 0.75rem 0.45rem calc(0.75rem + var(--d, 1) * 0.9rem); color: var(--warn, #e0a050); font-size: 0.78rem; line-height: 1.3; list-style: none; }
 .mini { height: 1.875rem; padding: 0 0.625rem; border-radius: 0.5625rem; background: var(--panel-2); border: 1px solid var(--line); font-size: 0.7812rem; font-weight: 600; }
 .mini.danger { color: var(--cut); }
 
@@ -1338,7 +1342,7 @@ html.ios button:active, html.ios .chip:active, html.ios .pi:active { filter: bri
 </div>
 <script>
 // theme before the app starts, so the first frame has the right colours
-(function () { try { if (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) document.documentElement.classList.add("ios"); } catch (e) {} })();
+(function () { try { if (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) document.documentElement.classList.add("ios"); if (window.KoruganDesktop) document.documentElement.classList.add("desktop"); } catch (e) {} })();
 (function () { var t = "glass"; try { var v = localStorage.getItem("kalem.theme"); if (!localStorage.getItem("kalem.glassMig")) { localStorage.setItem("kalem.glassMig", "1"); if (!v || v === '"korugan"' || v === '"sw"') { v = '"glass"'; localStorage.setItem("kalem.theme", v); } } if (v) t = JSON.parse(v); } catch (e) {} if (t !== "auto") document.documentElement.setAttribute("data-theme", t); })();
 </script>
 <script src="app.js"></script>
