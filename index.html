@@ -1340,6 +1340,7 @@ html.dsk:root #rpanel { left: calc(var(--lw) + 2 * var(--dg)) !important; }
 /* while a command runs, the tree flies out over the view (SolidWorks' flyout FeatureManager) */
 html.dsk:root body.sheet-open #tree { left: calc(var(--lw) + 2 * var(--dg)) !important; top: calc(var(--tbh) + var(--dg)) !important; bottom: auto !important; width: 15rem !important; max-height: 2.375rem !important; overflow: hidden; opacity: 0.9; animation: none; transition: max-height 0.35s var(--spring-soft, ease), opacity 0.2s; }
 html.dsk:root body.sheet-open #tree:hover, html.dsk:root body.sheet-open #tree:focus-within { max-height: calc(100% - var(--tbh) - var(--sbh) - 4rem) !important; overflow-y: auto; opacity: 1; }
+html.dsk:root body.sheet-open #tree.picking { max-height: calc(100% - var(--tbh) - var(--sbh) - 4rem) !important; overflow-y: auto; opacity: 1; }
 html.dsk:root body.sheet-open #tree .th strong::after { content: " ▾"; color: var(--muted); font-weight: 400; }
 /* PropertyManager header like SolidWorks: title, then OK / Cancel */
 html.dsk:root #sheet .sh { padding-bottom: 0.5rem; }
